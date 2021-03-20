@@ -1,0 +1,11 @@
+{% block title %}
+Create your account
+{% endblock %}
+
+{% block content %}
+<form method="post" class="form-group">
+  {% csrf_token %}
+      {{form}}
+      <input type="submit" class="btn btn-success" value="Register">
+</form>
+{% endblock %}
