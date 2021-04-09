@@ -1,10 +1,11 @@
-
 <!doctype html>
+{% load static %}
 <html lang="en" class="h-100">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <base href="/">
     <title>Django spammer</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
@@ -27,7 +28,7 @@
         }
       }
     </style>
-    <link href="/static/css/cover.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
 
 
 </head>
@@ -37,65 +38,54 @@
   <header class="mb-auto">
     <div>
       <h3 class="float-md-start mb-0">Welcome to the Django Mailgun Spammer</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Preview</a>
-      </nav>
     </div>
   </header>
   
   {% if user.is_authenticated %}
-      <form>
+      <form action="/success/" method="post">
+      {% csrf_token %}
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">E-mail address</label>
+            <label class="col-sm-2 col-form-label">E-mail address</label>
             <div class="col-sm-10">
-                <input type="emailaddress" class="form-control" id="inputEmail" placeholder="name@example.com">
+                <input type="emailaddress" class="form-control" id="inputEmail" placeholder="name@example.com" name="address">
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">E-mail title</label>
+            <label class="col-sm-2 col-form-label">E-mail title</label>
             <div class="col-sm-10">
-                <input type="rssurl" class="form-control" id="inputRSS" placeholder="Latest news!">
+                <input type="rssurl" class="form-control" id="inputRSS" placeholder="Latest news!" name="title">
             </div>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">Content</span>
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="content"></textarea>
+        </div>
+        <div class="form-group row">
+          <label for="appt">Choose an hour for your e-mail distribution (value between 1 and 24):</label>
+          <input type="number" id="appt" min="1" max="24" step="1" name="hour"/>
+        </div>
+          <div class="form-group row">
+            <label for="start">Start date:</label>
+            <input type="date" id="start" value="2021-01-01" min="2021-01-01" max="2099-12-31" name="date">
+          </div>
+        <div class="form-group row">
+          <div class="btn-group btn-group-toggle">
+            <input type="submit" class="btn btn-outline-primary" value="Submit"></input>
+            <button type="button" class="btn btn-outline-secondary">Preview</button>
+          </div>
         </div>
       </form>
-
-
-      <label for="appt">Choose a time for e-mail distribution:</label>
-
-      <input type="time" id="appt" name="appt"
-      min="00:00" max="24:00" required>
-      
-
-            <label for="start">Start date:</label>
-
-            <input type="date" id="start" name="trip-start"
-            value="2021-01-01"
-            min="2021-01-01" max="2099-12-31">
-
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option1" autocomplete="off">SAVE
-              </label>
-              <label class="btn btn-info">
-                <input type="radio" name="options" id="option2" autocomplete="off">PREVIEW
-              </label>
-              <label class="btn btn-danger">
-                <input type="radio" name="options" id="option3" autocomplete="off">SEND
-              </label>
-            </div>
-
 
       <footer class="mt-auto text-white-50">
       </footer>
     </div>
   {% else %}
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <a class="btn btn-outline-primary" href="login" role="button">Login</a>
+    <a class="btn btn-outline-secondary" href="register" role="button">Register</a>
+  </div>
   {% endif %}
   </body>
 </html>

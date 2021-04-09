@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import include, path
 from login import views as lv
 from mailer import views as mv
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', mv.index, name="index"),
     path('register/', lv.register, name="register"),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-]
+    path('success/', mv.success, name='success'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

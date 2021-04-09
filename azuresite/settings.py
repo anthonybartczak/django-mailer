@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,7 +26,7 @@ SECRET_KEY = '4+1churh^ija9307(vm$mxd@=hp*uvajd))cf+m68@wg$^+a%_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'mailer',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'djangomailgun.urls'
+ROOT_URLCONF = 'azuresite.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangomailgun.wsgi.application'
+WSGI_APPLICATION = 'azuresite.wsgi.application'
 
 
 # Database
@@ -78,10 +80,9 @@ WSGI_APPLICATION = 'djangomailgun.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -120,5 +121,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = "/"
+
+# Local setting
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+
+# Azure setting
+CELERY_BROKER_URL = 'redis://:NSnMvudM9+Yb3IBW5VMahzFeHFQWxwcL5zvsXLFQ1cE=@mailgunredis.redis.cache.windows.net:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:NSnMvudM9+Yb3IBW5VMahzFeHFQWxwcL5zvsXLFQ1cE=@mailgunredis.redis.cache.windows.net:6379/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    "scheduled_task": {
+        "task": "mailer.tasks.test",
+        "schedule": 5.0,
+    },
+}
