@@ -124,3 +124,5 @@ dmypy.json
 .azure/
 
 static/
+
+mailguncreds.py
