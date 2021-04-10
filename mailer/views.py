@@ -1,18 +1,24 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django import forms
-
-
-class Form(forms.Form):
-    address = forms.CharField()
-    title = forms.CharField(max_length=100)
-    content = forms.CharField(widget=forms.Textarea)
-    hour = forms.CharField()
-    date = forms.DateField()
-    
+from django.shortcuts import render, redirect
+from .forms import EmailForm
+from .models import EmailModel
+from django.contrib.auth import authenticate
 
 def index(request):
+    if request.user.is_authenticated:
+        mails = EmailModel.objects.filter(user_id=request.user)
+        return render(request, 'views/index.html', {'mails': mails})
     return render(request, 'views/index.html')
 
-def success(request):
-    return render(request, 'views/success.html')
+def success(response):
+    if response.method == "POST":
+        form = EmailForm(response.POST, response.FILES)
+        if form.is_valid():
+            form_obj = form.save(commit=False)
+            form_obj.user = response.user
+            form.save()
+            return render(response, "views/success.html")
+            
+    else:
+        form = EmailForm()
+
+    return render(response, "views/index.html", {"form":form})

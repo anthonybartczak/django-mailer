@@ -120,8 +120,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = "/"
 
@@ -129,8 +133,9 @@ LOGIN_REDIRECT_URL = "/"
 # CELERY_BROKER_URL = 'redis://localhost:6379'
 
 # Azure setting
-CELERY_BROKER_URL = 'redis://:NSnMvudM9+Yb3IBW5VMahzFeHFQWxwcL5zvsXLFQ1cE=@mailgunredis.redis.cache.windows.net:6379/0'
-CELERY_RESULT_BACKEND = 'redis://:NSnMvudM9+Yb3IBW5VMahzFeHFQWxwcL5zvsXLFQ1cE=@mailgunredis.redis.cache.windows.net:6379/0'
+REDIS_KEY = ''
+CELERY_BROKER_URL = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
