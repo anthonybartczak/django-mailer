@@ -2,12 +2,20 @@ from django.shortcuts import render, redirect
 from .forms import EmailForm
 from .models import EmailModel
 from django.contrib.auth import authenticate
+from .send_mail import mailgun_init
 
 def index(request):
+    #mailgun_init()
     if request.user.is_authenticated:
         mails = EmailModel.objects.filter(user_id=request.user)
         return render(request, 'views/index.html', {'mails': mails})
     return render(request, 'views/index.html')
+
+def your_emails(request):
+    if request.user.is_authenticated:
+        mails = EmailModel.objects.filter(user_id=request.user)
+        return render(request, 'views/your-emails.html', {'mails': mails})
+    return redirect("index")
 
 def success(response):
     if response.method == "POST":

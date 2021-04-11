@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from login import views as lv
 from mailer import views as mv
 from django.conf.urls.static import static
+from django.views.static import serve
 from django.conf import settings
 
 urlpatterns = [
@@ -26,7 +27,9 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('success/', mv.success, name='success'),
+    path('your-emails/', mv.your_emails, name='your_emails'),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT})
 ]
 
 urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

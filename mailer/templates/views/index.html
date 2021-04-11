@@ -5,14 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <base href="/">
     <title>Django spammer</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
 
     <!-- Bootstrap core CSS -->
     <link href="//cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cover.css' %}">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -28,7 +27,6 @@
         }
       }
     </style>
-    <link href="{% static 'css/cover.css' %}" rel="stylesheet">
 
 
 </head>
@@ -80,14 +78,9 @@
           </div>
         </div>
       </form>
-      {% block content %}
-      <h5 class="float-md-start mb-0">Your scheduled emails:</h5>
-      {% for mail in mails %}
-        <div class="card">
-            <p><b>Title:</b> {{ mail.title }} <b>Date</b>: {{ mail.date }} <b>Hour</b>: {{ mail.hour }}</p>
-        </div>
-      {% endfor %}
-      {% endblock %}
+      <div class="btn-group btn-group-toggle">
+          <input type="submit" class="btn btn-outline-secondary" onclick="location.href='/your-emails';" value="Your emails"></input>
+      </div>
       <footer class="mt-auto text-white-50">
       </footer>
     </div>

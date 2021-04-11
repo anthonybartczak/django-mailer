@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -58,7 +57,6 @@ ROOT_URLCONF = 'azuresite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,7 +118,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -129,11 +126,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = "/"
 
-# Local setting
-# CELERY_BROKER_URL = 'redis://localhost:6379'
+# LOCAL SETTINGS
+#CELERY_BROKER_URL = 'redis://localhost:6379'
+#CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
-# Azure setting
-REDIS_KEY = ''
+# AZURE SETTINGS
+REDIS_KEY = 'bVBcYX22CHn1ybovvlMdBvJeWxMwuYD9jOl+OKdRWd8='
 CELERY_BROKER_URL = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_RESULT_BACKEND = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -141,8 +139,8 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 
 CELERY_BEAT_SCHEDULE = {
-    "scheduled_task": {
-        "task": "mailer.tasks.test",
-        "schedule": 5.0,
+    "email_worker": {
+        "task": "mailing",
+        "schedule": 60.0,
     },
 }
