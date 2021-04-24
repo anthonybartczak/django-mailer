@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'login',
     'mailer',
     'django_celery_beat',
@@ -126,12 +127,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = "/"
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # LOCAL SETTINGS
 # CELERY_BROKER_URL = 'redis://localhost:6379'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 # AZURE SETTINGS
-REDIS_KEY = ''
+REDIS_KEY = 'pAJUrWY5sqVbRi0r3U4a+2RXcB6yBw56szfMytwyDB4='
 CELERY_BROKER_URL = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_RESULT_BACKEND = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
