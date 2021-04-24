@@ -12,7 +12,7 @@
 2. Clone the repository:\
 `git clone https://github.com/piotrborowski97/ProjektZespolowyWSB`
 
-3. Add a `mailguncreds.py` file and its contents:
+3. Inside the `mailer` folder add a `mailguncreds.py` file and its contents:
 
     ```python
     MAILGUN_API_KEY = "<key>"
@@ -51,6 +51,9 @@
 
     # Create the super user (follow prompts)
     python manage.py createsuperuser
+
+    # Collect static files
+    python manage.py collectstatic
 
     # Set up a Celery worker and a beat
     celery -A azuresite worker -l info --without-gossip --without-mingle --without-heartbeat -Ofair --pool=solo
