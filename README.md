@@ -10,7 +10,7 @@
 `az login`
 
 2. Clone the repository:\
-`git clone https://github.com/piotrborowski97/ProjektZespolowyWSB`
+`git clone https://github.com/anthonybartczak/djangomailer`
 
 3. Inside the `mailer` folder add a `mailguncreds.py` file and its contents:
 
@@ -18,6 +18,8 @@
     MAILGUN_API_KEY = "<key>"
     MAILGUN_BASE_URL = "https://api.mailgun.net/v3/<domain>"
     ```
+
+    This can be replaced with Azure ENV variables.
 
 4. Open your terminal in the designated folder and run the following command:\
     `az postgres up --resource-group mailgunres --location westeurope --sku-name B_Gen5_1 --server-name mailgunapp --database-name mailgundb --admin-user <user> --admin-password <password> --ssl-enforcement Enabled --storage-size 5120`
