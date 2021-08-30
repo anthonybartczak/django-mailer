@@ -134,7 +134,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 # AZURE SETTINGS
-REDIS_KEY = ''
+REDIS_KEY = 'luMPW7LOWPM+NTu40n1UNrjb20prY2FGo8H+QM7l4XU='
 CELERY_BROKER_URL = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_RESULT_BACKEND = 'redis://:' + REDIS_KEY + '@mailgunredis.redis.cache.windows.net:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
