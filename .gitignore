@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+.bak
+.dat
+.dir
+
 # Distribution / packaging
 .Python
 build/
@@ -82,9 +86,7 @@ ipython_config.py
 .python-version
 
 # celery beat schedule file
-celerybeat-schedule.bak
-celerybeat-schedule.dat
-celerybeat-schedule.dir
+
 
 # SageMath parsed files
 *.sage.py
